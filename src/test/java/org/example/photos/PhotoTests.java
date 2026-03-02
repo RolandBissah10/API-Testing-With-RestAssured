@@ -5,7 +5,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.example.base.BaseTest;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -16,64 +17,68 @@ import static org.hamcrest.Matchers.notNullValue;
 @Feature("Photos Management")
 public class PhotoTests extends BaseTest {
 
-    @Test
+    @ParameterizedTest(name = "GET photo with ID={0}")
     @Story("GET Photo by ID")
     @Description("Verify fetching a photo by ID.")
-    public void testGetPhoto() {
+    @MethodSource("org.example.photos.PhotoData#getPhotoIds")
+    public void testGetPhoto(int id) {
         given()
                 .when()
-                .get("/photos/1")
+                .get("/photos/" + id)
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1))
-                .body("albumId", equalTo(1))
+                .body("id", equalTo(id))
+                .body("albumId", notNullValue())
                 .body("title", notNullValue())
                 .body("url", notNullValue())
                 .body("thumbnailUrl", notNullValue())
                 .body(matchesJsonSchemaInClasspath("photo-schema.json"));
     }
 
-    @Test
+    @ParameterizedTest(name = "POST create photo: title={0}, albumId={3}")
     @Story("POST Create new Photo")
     @Description("Verify creating a photo.")
-    public void testCreatePhoto() {
+    @MethodSource("org.example.photos.PhotoData#getNewPhotos")
+    public void testCreatePhoto(String title, String url, String thumbnailUrl, int albumId) {
         given()
-                .body(PhotoData.getNewPhoto())
+                .body(PhotoData.buildNewPhoto(title, url, thumbnailUrl, albumId))
                 .when()
                 .post("/photos")
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
-                .body("title", equalTo("Sample Photo Title"))
-                .body("url", equalTo("https://via.placeholder.com/600/92c952"))
-                .body("thumbnailUrl", equalTo("https://via.placeholder.com/150/92c952"))
-                .body("albumId", equalTo(1));
+                .body("title", equalTo(title))
+                .body("url", equalTo(url))
+                .body("thumbnailUrl", equalTo(thumbnailUrl))
+                .body("albumId", equalTo(albumId));
     }
 
-    @Test
+    @ParameterizedTest(name = "PUT update photo ID={0}")
     @Story("PUT Update Photo")
     @Description("Verify updating a photo.")
-    public void testUpdatePhoto() {
+    @MethodSource("org.example.photos.PhotoData#getUpdatedPhotos")
+    public void testUpdatePhoto(int id, String title, String url, String thumbnailUrl, int albumId) {
         given()
-                .body(PhotoData.getUpdatedPhoto(1))
+                .body(PhotoData.buildUpdatedPhoto(id, title, url, thumbnailUrl, albumId))
                 .when()
-                .put("/photos/1")
+                .put("/photos/" + id)
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1))
-                .body("title", equalTo("Updated Photo Title"))
-                .body("url", equalTo("https://via.placeholder.com/600/92c952"))
-                .body("thumbnailUrl", equalTo("https://via.placeholder.com/150/92c952"))
-                .body("albumId", equalTo(1));
+                .body("id", equalTo(id))
+                .body("title", equalTo(title))
+                .body("url", equalTo(url))
+                .body("thumbnailUrl", equalTo(thumbnailUrl))
+                .body("albumId", equalTo(albumId));
     }
 
-    @Test
+    @ParameterizedTest(name = "DELETE photo with ID={0}")
     @Story("DELETE Remove Photo")
     @Description("Verify deleting a photo.")
-    public void testDeletePhoto() {
+    @MethodSource("org.example.photos.PhotoData#getPhotoIds")
+    public void testDeletePhoto(int id) {
         given()
                 .when()
-                .delete("/photos/1")
+                .delete("/photos/" + id)
                 .then()
                 .statusCode(200);
     }

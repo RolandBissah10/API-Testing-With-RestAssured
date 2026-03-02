@@ -1,24 +1,72 @@
-2026-03-02 15:12:04 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - testDeleteAlbum()
-2026-03-02 15:12:07 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - testGetAlbum()
-2026-03-02 15:12:08 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - testUpdateAlbum()
-2026-03-02 15:12:09 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - testCreateAlbum()
-2026-03-02 15:12:10 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - testDeleteComment()
-2026-03-02 15:12:11 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - testCreateComment()
-2026-03-02 15:12:11 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - testGetComment()
-2026-03-02 15:12:12 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - testUpdateComment()
-2026-03-02 15:12:13 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - testDeletePhoto()
-2026-03-02 15:12:14 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - testGetPhoto()
-2026-03-02 15:12:15 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - testUpdatePhoto()
-2026-03-02 15:12:15 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - testCreatePhoto()
-2026-03-02 15:12:16 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - testUpdatePost()
-2026-03-02 15:12:17 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - testGetPost()
-2026-03-02 15:12:17 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - testCreatePost()
-2026-03-02 15:12:18 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - testDeletePost()
-2026-03-02 15:12:19 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - testUpdateTodo()
-2026-03-02 15:12:20 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - testGetTodo()
-2026-03-02 15:12:21 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - testCreateTodo()
-2026-03-02 15:12:22 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - testDeleteTodo()
-2026-03-02 15:12:23 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - testUpdateUser()
-2026-03-02 15:12:23 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - testGetUser()
-2026-03-02 15:12:24 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - testCreateUser()
-2026-03-02 15:12:25 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - testDeleteUser()
+2026-03-02 15:58:32 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - DELETE album with ID=1
+2026-03-02 15:58:33 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - DELETE album with ID=2
+2026-03-02 15:58:34 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - DELETE album with ID=3
+2026-03-02 15:58:39 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - GET album with ID=1
+2026-03-02 15:58:40 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - GET album with ID=2
+2026-03-02 15:58:41 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - GET album with ID=3
+2026-03-02 15:58:42 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - PUT update album ID=1
+2026-03-02 15:58:43 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - PUT update album ID=2
+2026-03-02 15:58:44 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - PUT update album ID=3
+2026-03-02 15:58:45 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - POST create album: title=Sample Album Title, userId=1
+2026-03-02 15:58:47 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - POST create album: title=Another Album Title, userId=2
+2026-03-02 15:58:48 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [AlbumTests] - POST create album: title=Third Album Title, userId=3
+2026-03-02 15:58:49 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - DELETE comment with ID=1
+2026-03-02 15:58:50 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - DELETE comment with ID=2
+2026-03-02 15:58:50 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - DELETE comment with ID=3
+2026-03-02 15:58:51 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - POST create comment: name=Sample Comment Name, postId=1
+2026-03-02 15:58:52 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - POST create comment: name=Another Comment Name, postId=2
+2026-03-02 15:58:53 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - POST create comment: name=Third Comment Name, postId=3
+2026-03-02 15:58:54 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - GET comment with ID=1
+2026-03-02 15:58:55 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - GET comment with ID=2
+2026-03-02 15:58:55 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - GET comment with ID=3
+2026-03-02 15:58:57 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - PUT update comment ID=1
+2026-03-02 15:58:58 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - PUT update comment ID=2
+2026-03-02 15:58:59 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [CommentTests] - PUT update comment ID=3
+2026-03-02 15:58:59 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - DELETE photo with ID=1
+2026-03-02 15:59:00 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - DELETE photo with ID=2
+2026-03-02 15:59:01 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - DELETE photo with ID=3
+2026-03-02 15:59:02 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - GET photo with ID=1
+2026-03-02 15:59:03 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - GET photo with ID=2
+2026-03-02 15:59:04 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - GET photo with ID=3
+2026-03-02 15:59:05 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - PUT update photo ID=1
+2026-03-02 15:59:05 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - PUT update photo ID=2
+2026-03-02 15:59:07 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - PUT update photo ID=3
+2026-03-02 15:59:08 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - POST create photo: title=Sample Photo Title, albumId=1
+2026-03-02 15:59:08 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - POST create photo: title=Another Photo Title, albumId=1
+2026-03-02 15:59:09 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PhotoTests] - POST create photo: title=Third Photo Title, albumId=2
+2026-03-02 15:59:10 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - PUT update post ID=1
+2026-03-02 15:59:11 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - PUT update post ID=2
+2026-03-02 15:59:12 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - PUT update post ID=3
+2026-03-02 15:59:13 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - GET post with ID=1
+2026-03-02 15:59:14 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - GET post with ID=2
+2026-03-02 15:59:14 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - GET post with ID=3
+2026-03-02 15:59:15 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - POST create post: title=Sample Post Title, userId=1
+2026-03-02 15:59:16 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - POST create post: title=Another Post Title, userId=2
+2026-03-02 15:59:17 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - POST create post: title=Third Post Title, userId=3
+2026-03-02 15:59:18 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - DELETE post with ID=1
+2026-03-02 15:59:18 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - DELETE post with ID=2
+2026-03-02 15:59:19 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [PostTests] - DELETE post with ID=3
+2026-03-02 15:59:20 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - PUT update todo ID=1
+2026-03-02 15:59:21 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - PUT update todo ID=2
+2026-03-02 15:59:22 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - PUT update todo ID=3
+2026-03-02 15:59:23 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - GET todo with ID=1
+2026-03-02 15:59:24 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - GET todo with ID=2
+2026-03-02 15:59:25 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - GET todo with ID=3
+2026-03-02 15:59:26 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - POST create todo: title=Sample Todo, userId=1
+2026-03-02 15:59:27 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - POST create todo: title=Another Todo, userId=2
+2026-03-02 15:59:27 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - POST create todo: title=Third Todo, userId=3
+2026-03-02 15:59:28 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - DELETE todo with ID=1
+2026-03-02 15:59:29 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - DELETE todo with ID=2
+2026-03-02 15:59:29 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [TodoTests] - DELETE todo with ID=3
+2026-03-02 15:59:31 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - PUT update user ID=1
+2026-03-02 15:59:32 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - PUT update user ID=2
+2026-03-02 15:59:33 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - PUT update user ID=3
+2026-03-02 15:59:34 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - GET user with ID=1
+2026-03-02 15:59:35 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - GET user with ID=2
+2026-03-02 15:59:36 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - GET user with ID=3
+2026-03-02 15:59:36 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - POST create user: name=John Doe, username=johndoe
+2026-03-02 15:59:37 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - POST create user: name=Jane Smith, username=janesmith
+2026-03-02 15:59:38 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - POST create user: name=Bob Johnson, username=bjohnson
+2026-03-02 15:59:39 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - DELETE user with ID=1
+2026-03-02 15:59:40 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - DELETE user with ID=2
+2026-03-02 15:59:40 [main] INFO  org.example.utils.TestResultLogger - TEST PASSED: [UserTests] - DELETE user with ID=3

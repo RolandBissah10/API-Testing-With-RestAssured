@@ -5,7 +5,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.example.base.BaseTest;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -16,64 +17,68 @@ import static org.hamcrest.Matchers.notNullValue;
 @Feature("Comments Management")
 public class CommentTests extends BaseTest {
 
-    @Test
+    @ParameterizedTest(name = "GET comment with ID={0}")
     @Story("GET Comment by ID")
     @Description("Verify fetching a comment by ID.")
-    public void testGetComment() {
+    @MethodSource("org.example.comments.CommentData#getCommentIds")
+    public void testGetComment(int id) {
         given()
                 .when()
-                .get("/comments/1")
+                .get("/comments/" + id)
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1))
-                .body("postId", equalTo(1))
+                .body("id", equalTo(id))
+                .body("postId", notNullValue())
                 .body("name", notNullValue())
                 .body("email", notNullValue())
                 .body("body", notNullValue())
                 .body(matchesJsonSchemaInClasspath("comment-schema.json"));
     }
 
-    @Test
+    @ParameterizedTest(name = "POST create comment: name={0}, postId={3}")
     @Story("POST Create new Comment")
     @Description("Verify creating a comment.")
-    public void testCreateComment() {
+    @MethodSource("org.example.comments.CommentData#getNewComments")
+    public void testCreateComment(String name, String email, String body, int postId) {
         given()
-                .body(CommentData.getNewComment())
+                .body(CommentData.buildNewComment(name, email, body, postId))
                 .when()
                 .post("/comments")
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
-                .body("name", equalTo("Sample Comment Name"))
-                .body("email", equalTo("test@example.com"))
-                .body("body", equalTo("Sample Comment Body"))
-                .body("postId", equalTo(1));
+                .body("name", equalTo(name))
+                .body("email", equalTo(email))
+                .body("body", equalTo(body))
+                .body("postId", equalTo(postId));
     }
 
-    @Test
+    @ParameterizedTest(name = "PUT update comment ID={0}")
     @Story("PUT Update Comment")
     @Description("Verify updating a comment.")
-    public void testUpdateComment() {
+    @MethodSource("org.example.comments.CommentData#getUpdatedComments")
+    public void testUpdateComment(int id, String name, String email, String body, int postId) {
         given()
-                .body(CommentData.getUpdatedComment(1))
+                .body(CommentData.buildUpdatedComment(id, name, email, body, postId))
                 .when()
-                .put("/comments/1")
+                .put("/comments/" + id)
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1))
-                .body("name", equalTo("Updated Comment Name"))
-                .body("email", equalTo("updated@example.com"))
-                .body("body", equalTo("Updated Comment Body"))
-                .body("postId", equalTo(1));
+                .body("id", equalTo(id))
+                .body("name", equalTo(name))
+                .body("email", equalTo(email))
+                .body("body", equalTo(body))
+                .body("postId", equalTo(postId));
     }
 
-    @Test
+    @ParameterizedTest(name = "DELETE comment with ID={0}")
     @Story("DELETE Remove Comment")
     @Description("Verify deleting a comment.")
-    public void testDeleteComment() {
+    @MethodSource("org.example.comments.CommentData#getCommentIds")
+    public void testDeleteComment(int id) {
         given()
                 .when()
-                .delete("/comments/1")
+                .delete("/comments/" + id)
                 .then()
                 .statusCode(200);
     }

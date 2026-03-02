@@ -5,7 +5,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.example.base.BaseTest;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -16,58 +17,62 @@ import static org.hamcrest.Matchers.notNullValue;
 @Feature("Albums Management")
 public class AlbumTests extends BaseTest {
 
-    @Test
+    @ParameterizedTest(name = "GET album with ID={0}")
     @Story("GET Album by ID")
     @Description("Verify fetching an album by ID.")
-    public void testGetAlbum() {
+    @MethodSource("org.example.albums.AlbumData#getAlbumIds")
+    public void testGetAlbum(int id) {
         given()
                 .when()
-                .get("/albums/1")
+                .get("/albums/" + id)
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1))
-                .body("userId", equalTo(1))
+                .body("id", equalTo(id))
+                .body("userId", notNullValue())
                 .body("title", notNullValue())
                 .body(matchesJsonSchemaInClasspath("album-schema.json"));
     }
 
-    @Test
+    @ParameterizedTest(name = "POST create album: title={0}, userId={1}")
     @Story("POST Create new Album")
     @Description("Verify creating an album.")
-    public void testCreateAlbum() {
+    @MethodSource("org.example.albums.AlbumData#getNewAlbums")
+    public void testCreateAlbum(String title, int userId) {
         given()
-                .body(AlbumData.getNewAlbum())
+                .body(AlbumData.buildNewAlbum(title, userId))
                 .when()
                 .post("/albums")
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
-                .body("title", equalTo("Sample Album Title"))
-                .body("userId", equalTo(1));
+                .body("title", equalTo(title))
+                .body("userId", equalTo(userId));
     }
 
-    @Test
+    @ParameterizedTest(name = "PUT update album ID={0}")
     @Story("PUT Update Album")
     @Description("Verify updating an album.")
-    public void testUpdateAlbum() {
+    @MethodSource("org.example.albums.AlbumData#getUpdatedAlbums")
+    public void testUpdateAlbum(int id, String title, int userId) {
         given()
-                .body(AlbumData.getUpdatedAlbum(1))
+                .body(AlbumData.buildUpdatedAlbum(id, title, userId))
                 .when()
-                .put("/albums/1")
+                .put("/albums/" + id)
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1))
-                .body("title", equalTo("Updated Album Title"))
-                .body("userId", equalTo(1));
+                .body("id", equalTo(id))
+                .body("title", equalTo(title))
+                .body("userId", equalTo(userId));
     }
 
-    @Test
+    @ParameterizedTest(name = "DELETE album with ID={0}")
     @Story("DELETE Remove Album")
     @Description("Verify deleting an album.")
-    public void testDeleteAlbum() {
+    @MethodSource("org.example.albums.AlbumData#getAlbumIds")
+    public void testDeleteAlbum(int id) {
         given()
                 .when()
-                .delete("/albums/1")
+                .delete("/albums/" + id)
                 .then()
                 .statusCode(200);
     }

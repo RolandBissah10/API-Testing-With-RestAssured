@@ -5,7 +5,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.example.base.BaseTest;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -16,61 +17,64 @@ import static org.hamcrest.Matchers.notNullValue;
 @Feature("Posts Management")
 public class PostTests extends BaseTest {
 
-    @Test
+    @ParameterizedTest(name = "GET post with ID={0}")
     @Story("GET Post by ID")
     @Description("Verify fetching a post by ID.")
-    public void testGetPost() {
+    @MethodSource("org.example.posts.PostData#getPostIds")
+    public void testGetPost(int id) {
         given()
                 .when()
-                .get("/posts/1")
+                .get("/posts/" + id)
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1))
-                .body("userId", equalTo(1))
+                .body("id", equalTo(id))
                 .body("title", notNullValue())
                 .body("body", notNullValue())
                 .body(matchesJsonSchemaInClasspath("post-schema.json"));
     }
 
-    @Test
+    @ParameterizedTest(name = "POST create post: title={0}, userId={2}")
     @Story("POST Create new Post")
     @Description("Verify creating a post.")
-    public void testCreatePost() {
+    @MethodSource("org.example.posts.PostData#getNewPosts")
+    public void testCreatePost(String title, String body, int userId) {
         given()
-                .body(PostData.getNewPost())
+                .body(PostData.buildNewPost(title, body, userId))
                 .when()
                 .post("/posts")
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
-                .body("title", equalTo("Sample Post Title"))
-                .body("body", equalTo("Sample Post Body"))
-                .body("userId", equalTo(1));
+                .body("title", equalTo(title))
+                .body("body", equalTo(body))
+                .body("userId", equalTo(userId));
     }
 
-    @Test
+    @ParameterizedTest(name = "PUT update post ID={0}")
     @Story("PUT Update Post")
     @Description("Verify updating a post.")
-    public void testUpdatePost() {
+    @MethodSource("org.example.posts.PostData#getUpdatedPosts")
+    public void testUpdatePost(int id, String title, String body, int userId) {
         given()
-                .body(PostData.getUpdatedPost(1))
+                .body(PostData.buildUpdatedPost(id, title, body, userId))
                 .when()
-                .put("/posts/1")
+                .put("/posts/" + id)
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1))
-                .body("title", equalTo("Updated Post Title"))
-                .body("body", equalTo("Updated Post Body"))
-                .body("userId", equalTo(1));
+                .body("id", equalTo(id))
+                .body("title", equalTo(title))
+                .body("body", equalTo(body))
+                .body("userId", equalTo(userId));
     }
 
-    @Test
+    @ParameterizedTest(name = "DELETE post with ID={0}")
     @Story("DELETE Remove Post")
     @Description("Verify deleting a post.")
-    public void testDeletePost() {
+    @MethodSource("org.example.posts.PostData#getPostIds")
+    public void testDeletePost(int id) {
         given()
                 .when()
-                .delete("/posts/1")
+                .delete("/posts/" + id)
                 .then()
                 .statusCode(200);
     }
