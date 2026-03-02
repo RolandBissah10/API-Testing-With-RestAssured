@@ -1,11 +1,10 @@
-package org.example.tests;
+package org.example.albums;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.example.base.BaseTest;
-import org.example.data.TodoData;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -14,64 +13,61 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 @Epic("REST API Test Suite")
-@Feature("Todos Management")
-public class TodoTests extends BaseTest {
+@Feature("Albums Management")
+public class AlbumTests extends BaseTest {
 
     @Test
-    @Story("GET Todo by ID")
-    @Description("Verify fetching a todo by ID.")
-    public void testGetTodo() {
+    @Story("GET Album by ID")
+    @Description("Verify fetching an album by ID.")
+    public void testGetAlbum() {
         given()
                 .when()
-                .get("/todos/1")
+                .get("/albums/1")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1))
                 .body("userId", equalTo(1))
                 .body("title", notNullValue())
-                .body("completed", notNullValue())
-                .body(matchesJsonSchemaInClasspath("todo-schema.json"));
+                .body(matchesJsonSchemaInClasspath("album-schema.json"));
     }
 
     @Test
-    @Story("POST Create new Todo")
-    @Description("Verify creating a todo.")
-    public void testCreateTodo() {
+    @Story("POST Create new Album")
+    @Description("Verify creating an album.")
+    public void testCreateAlbum() {
         given()
-                .body(TodoData.getNewTodo())
+                .body(AlbumData.getNewAlbum())
                 .when()
-                .post("/todos")
+                .post("/albums")
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
-                .body("title", equalTo("Sample Todo"))
-                .body("completed", equalTo(false))
+                .body("title", equalTo("Sample Album Title"))
                 .body("userId", equalTo(1));
     }
 
     @Test
-    @Story("PUT Update Todo")
-    @Description("Verify updating a todo.")
-    public void testUpdateTodo() {
+    @Story("PUT Update Album")
+    @Description("Verify updating an album.")
+    public void testUpdateAlbum() {
         given()
-                .body(TodoData.getUpdatedTodo(1))
+                .body(AlbumData.getUpdatedAlbum(1))
                 .when()
-                .put("/todos/1")
+                .put("/albums/1")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1))
-                .body("title", equalTo("Updated Todo"))
-                .body("completed", equalTo(true))
+                .body("title", equalTo("Updated Album Title"))
                 .body("userId", equalTo(1));
     }
 
     @Test
-    @Story("DELETE Remove Todo")
-    @Description("Verify deleting a todo.")
-    public void testDeleteTodo() {
+    @Story("DELETE Remove Album")
+    @Description("Verify deleting an album.")
+    public void testDeleteAlbum() {
         given()
                 .when()
-                .delete("/todos/1")
+                .delete("/albums/1")
                 .then()
                 .statusCode(200);
     }

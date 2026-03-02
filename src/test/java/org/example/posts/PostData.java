@@ -1,4 +1,4 @@
-package org.example.data;
+package org.example.posts;
 
 import java.util.HashMap;
 import java.util.Map;

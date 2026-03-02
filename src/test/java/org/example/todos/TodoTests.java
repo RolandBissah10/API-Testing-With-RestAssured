@@ -1,11 +1,10 @@
-package org.example.tests;
+package org.example.todos;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.example.base.BaseTest;
-import org.example.data.PostData;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -14,64 +13,64 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 @Epic("REST API Test Suite")
-@Feature("Posts Management")
-public class PostTests extends BaseTest {
+@Feature("Todos Management")
+public class TodoTests extends BaseTest {
 
     @Test
-    @Story("GET Post by ID")
-    @Description("Verify fetching a post by ID.")
-    public void testGetPost() {
+    @Story("GET Todo by ID")
+    @Description("Verify fetching a todo by ID.")
+    public void testGetTodo() {
         given()
                 .when()
-                .get("/posts/1")
+                .get("/todos/1")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1))
                 .body("userId", equalTo(1))
                 .body("title", notNullValue())
-                .body("body", notNullValue())
-                .body(matchesJsonSchemaInClasspath("post-schema.json"));
+                .body("completed", notNullValue())
+                .body(matchesJsonSchemaInClasspath("todo-schema.json"));
     }
 
     @Test
-    @Story("POST Create new Post")
-    @Description("Verify creating a post.")
-    public void testCreatePost() {
+    @Story("POST Create new Todo")
+    @Description("Verify creating a todo.")
+    public void testCreateTodo() {
         given()
-                .body(PostData.getNewPost())
+                .body(TodoData.getNewTodo())
                 .when()
-                .post("/posts")
+                .post("/todos")
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
-                .body("title", equalTo("Sample Post Title"))
-                .body("body", equalTo("Sample Post Body"))
+                .body("title", equalTo("Sample Todo"))
+                .body("completed", equalTo(false))
                 .body("userId", equalTo(1));
     }
 
     @Test
-    @Story("PUT Update Post")
-    @Description("Verify updating a post.")
-    public void testUpdatePost() {
+    @Story("PUT Update Todo")
+    @Description("Verify updating a todo.")
+    public void testUpdateTodo() {
         given()
-                .body(PostData.getUpdatedPost(1))
+                .body(TodoData.getUpdatedTodo(1))
                 .when()
-                .put("/posts/1")
+                .put("/todos/1")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1))
-                .body("title", equalTo("Updated Post Title"))
-                .body("body", equalTo("Updated Post Body"))
+                .body("title", equalTo("Updated Todo"))
+                .body("completed", equalTo(true))
                 .body("userId", equalTo(1));
     }
 
     @Test
-    @Story("DELETE Remove Post")
-    @Description("Verify deleting a post.")
-    public void testDeletePost() {
+    @Story("DELETE Remove Todo")
+    @Description("Verify deleting a todo.")
+    public void testDeleteTodo() {
         given()
                 .when()
-                .delete("/posts/1")
+                .delete("/todos/1")
                 .then()
                 .statusCode(200);
     }

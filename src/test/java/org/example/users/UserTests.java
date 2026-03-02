@@ -1,11 +1,10 @@
-package org.example.tests;
+package org.example.users;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.example.base.BaseTest;
-import org.example.data.UserData;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;

@@ -1,4 +1,4 @@
-package org.example.data;
+package org.example.todos;
 
 import java.util.HashMap;
 import java.util.Map;

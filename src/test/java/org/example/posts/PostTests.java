@@ -1,11 +1,10 @@
-package org.example.tests;
+package org.example.posts;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.example.base.BaseTest;
-import org.example.data.AlbumData;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -14,61 +13,64 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 @Epic("REST API Test Suite")
-@Feature("Albums Management")
-public class AlbumTests extends BaseTest {
+@Feature("Posts Management")
+public class PostTests extends BaseTest {
 
     @Test
-    @Story("GET Album by ID")
-    @Description("Verify fetching an album by ID.")
-    public void testGetAlbum() {
+    @Story("GET Post by ID")
+    @Description("Verify fetching a post by ID.")
+    public void testGetPost() {
         given()
                 .when()
-                .get("/albums/1")
+                .get("/posts/1")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1))
                 .body("userId", equalTo(1))
                 .body("title", notNullValue())
-                .body(matchesJsonSchemaInClasspath("album-schema.json"));
+                .body("body", notNullValue())
+                .body(matchesJsonSchemaInClasspath("post-schema.json"));
     }
 
     @Test
-    @Story("POST Create new Album")
-    @Description("Verify creating an album.")
-    public void testCreateAlbum() {
+    @Story("POST Create new Post")
+    @Description("Verify creating a post.")
+    public void testCreatePost() {
         given()
-                .body(AlbumData.getNewAlbum())
+                .body(PostData.getNewPost())
                 .when()
-                .post("/albums")
+                .post("/posts")
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
-                .body("title", equalTo("Sample Album Title"))
+                .body("title", equalTo("Sample Post Title"))
+                .body("body", equalTo("Sample Post Body"))
                 .body("userId", equalTo(1));
     }
 
     @Test
-    @Story("PUT Update Album")
-    @Description("Verify updating an album.")
-    public void testUpdateAlbum() {
+    @Story("PUT Update Post")
+    @Description("Verify updating a post.")
+    public void testUpdatePost() {
         given()
-                .body(AlbumData.getUpdatedAlbum(1))
+                .body(PostData.getUpdatedPost(1))
                 .when()
-                .put("/albums/1")
+                .put("/posts/1")
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(1))
-                .body("title", equalTo("Updated Album Title"))
+                .body("title", equalTo("Updated Post Title"))
+                .body("body", equalTo("Updated Post Body"))
                 .body("userId", equalTo(1));
     }
 
     @Test
-    @Story("DELETE Remove Album")
-    @Description("Verify deleting an album.")
-    public void testDeleteAlbum() {
+    @Story("DELETE Remove Post")
+    @Description("Verify deleting a post.")
+    public void testDeletePost() {
         given()
                 .when()
-                .delete("/albums/1")
+                .delete("/posts/1")
                 .then()
                 .statusCode(200);
     }
