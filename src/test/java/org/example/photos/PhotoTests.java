@@ -24,7 +24,7 @@ public class PhotoTests extends BaseTest {
     public void testGetPhoto(int id) {
         given()
                 .when()
-                .get("/photos/" + id)
+                .get(PhotoEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -41,9 +41,9 @@ public class PhotoTests extends BaseTest {
     @MethodSource("org.example.photos.PhotoData#getNewPhotos")
     public void testCreatePhoto(String title, String url, String thumbnailUrl, int albumId) {
         given()
-                .body(PhotoData.buildNewPhoto(title, url, thumbnailUrl, albumId))
+                .body(PhotoPayload.buildNewPhoto(title, url, thumbnailUrl, albumId))
                 .when()
-                .post("/photos")
+                .post(PhotoEndpoint.PHOTOS)
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
@@ -59,9 +59,9 @@ public class PhotoTests extends BaseTest {
     @MethodSource("org.example.photos.PhotoData#getUpdatedPhotos")
     public void testUpdatePhoto(int id, String title, String url, String thumbnailUrl, int albumId) {
         given()
-                .body(PhotoData.buildUpdatedPhoto(id, title, url, thumbnailUrl, albumId))
+                .body(PhotoPayload.buildUpdatedPhoto(id, title, url, thumbnailUrl, albumId))
                 .when()
-                .put("/photos/" + id)
+                .put(PhotoEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -78,7 +78,7 @@ public class PhotoTests extends BaseTest {
     public void testDeletePhoto(int id) {
         given()
                 .when()
-                .delete("/photos/" + id)
+                .delete(PhotoEndpoint.getById(id))
                 .then()
                 .statusCode(200);
     }

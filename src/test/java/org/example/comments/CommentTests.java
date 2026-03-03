@@ -24,7 +24,7 @@ public class CommentTests extends BaseTest {
     public void testGetComment(int id) {
         given()
                 .when()
-                .get("/comments/" + id)
+                .get(CommentEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -41,9 +41,9 @@ public class CommentTests extends BaseTest {
     @MethodSource("org.example.comments.CommentData#getNewComments")
     public void testCreateComment(String name, String email, String body, int postId) {
         given()
-                .body(CommentData.buildNewComment(name, email, body, postId))
+                .body(CommentPayload.buildNewComment(name, email, body, postId))
                 .when()
-                .post("/comments")
+                .post(CommentEndpoint.COMMENTS)
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
@@ -59,9 +59,9 @@ public class CommentTests extends BaseTest {
     @MethodSource("org.example.comments.CommentData#getUpdatedComments")
     public void testUpdateComment(int id, String name, String email, String body, int postId) {
         given()
-                .body(CommentData.buildUpdatedComment(id, name, email, body, postId))
+                .body(CommentPayload.buildUpdatedComment(id, name, email, body, postId))
                 .when()
-                .put("/comments/" + id)
+                .put(CommentEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -78,7 +78,7 @@ public class CommentTests extends BaseTest {
     public void testDeleteComment(int id) {
         given()
                 .when()
-                .delete("/comments/" + id)
+                .delete(CommentEndpoint.getById(id))
                 .then()
                 .statusCode(200);
     }

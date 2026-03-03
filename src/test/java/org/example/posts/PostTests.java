@@ -24,7 +24,7 @@ public class PostTests extends BaseTest {
     public void testGetPost(int id) {
         given()
                 .when()
-                .get("/posts/" + id)
+                .get(PostEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -39,9 +39,9 @@ public class PostTests extends BaseTest {
     @MethodSource("org.example.posts.PostData#getNewPosts")
     public void testCreatePost(String title, String body, int userId) {
         given()
-                .body(PostData.buildNewPost(title, body, userId))
+                .body(PostPayload.buildNewPost(title, body, userId))
                 .when()
-                .post("/posts")
+                .post(PostEndpoint.POSTS)
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
@@ -56,9 +56,9 @@ public class PostTests extends BaseTest {
     @MethodSource("org.example.posts.PostData#getUpdatedPosts")
     public void testUpdatePost(int id, String title, String body, int userId) {
         given()
-                .body(PostData.buildUpdatedPost(id, title, body, userId))
+                .body(PostPayload.buildUpdatedPost(id, title, body, userId))
                 .when()
-                .put("/posts/" + id)
+                .put(PostEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -74,7 +74,7 @@ public class PostTests extends BaseTest {
     public void testDeletePost(int id) {
         given()
                 .when()
-                .delete("/posts/" + id)
+                .delete(PostEndpoint.getById(id))
                 .then()
                 .statusCode(200);
     }

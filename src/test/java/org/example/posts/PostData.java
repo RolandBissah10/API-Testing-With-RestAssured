@@ -2,8 +2,6 @@ package org.example.posts;
 
 import org.junit.jupiter.params.provider.Arguments;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 public class PostData {
@@ -24,22 +22,5 @@ public class PostData {
                 Arguments.of(1, "Updated Post Title", "Updated Post Body", 1),
                 Arguments.of(2, "Updated Post Title 2", "Updated Post Body 2", 1),
                 Arguments.of(3, "Updated Post Title 3", "Updated Post Body 3", 2));
-    }
-
-    public static Map<String, Object> buildNewPost(String title, String body, int userId) {
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("title", title);
-        payload.put("body", body);
-        payload.put("userId", userId);
-        return payload;
-    }
-
-    public static Map<String, Object> buildUpdatedPost(int id, String title, String body, int userId) {
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("id", id);
-        payload.put("title", title);
-        payload.put("body", body);
-        payload.put("userId", userId);
-        return payload;
     }
 }

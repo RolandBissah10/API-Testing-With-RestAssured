@@ -24,7 +24,7 @@ public class UserTests extends BaseTest {
     public void testGetUser(int id) {
         given()
                 .when()
-                .get("/users/" + id)
+                .get(UserEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -40,9 +40,9 @@ public class UserTests extends BaseTest {
     @MethodSource("org.example.users.UserData#getNewUsers")
     public void testCreateUser(String name, String username, String email) {
         given()
-                .body(UserData.buildNewUser(name, username, email))
+                .body(UserPayload.buildNewUser(name, username, email))
                 .when()
-                .post("/users")
+                .post(UserEndpoint.USERS)
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
@@ -57,9 +57,9 @@ public class UserTests extends BaseTest {
     @MethodSource("org.example.users.UserData#getUpdatedUsers")
     public void testUpdateUser(int id, String name, String username, String email) {
         given()
-                .body(UserData.buildUpdatedUser(id, name, username, email))
+                .body(UserPayload.buildUpdatedUser(id, name, username, email))
                 .when()
-                .put("/users/" + id)
+                .put(UserEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -75,7 +75,7 @@ public class UserTests extends BaseTest {
     public void testDeleteUser(int id) {
         given()
                 .when()
-                .delete("/users/" + id)
+                .delete(UserEndpoint.getById(id))
                 .then()
                 .statusCode(200);
     }

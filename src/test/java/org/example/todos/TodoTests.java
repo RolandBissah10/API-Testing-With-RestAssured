@@ -24,7 +24,7 @@ public class TodoTests extends BaseTest {
     public void testGetTodo(int id) {
         given()
                 .when()
-                .get("/todos/" + id)
+                .get(TodoEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -40,9 +40,9 @@ public class TodoTests extends BaseTest {
     @MethodSource("org.example.todos.TodoData#getNewTodos")
     public void testCreateTodo(String title, boolean completed, int userId) {
         given()
-                .body(TodoData.buildNewTodo(title, completed, userId))
+                .body(TodoPayload.buildNewTodo(title, completed, userId))
                 .when()
-                .post("/todos")
+                .post(TodoEndpoint.TODOS)
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
@@ -57,9 +57,9 @@ public class TodoTests extends BaseTest {
     @MethodSource("org.example.todos.TodoData#getUpdatedTodos")
     public void testUpdateTodo(int id, String title, boolean completed, int userId) {
         given()
-                .body(TodoData.buildUpdatedTodo(id, title, completed, userId))
+                .body(TodoPayload.buildUpdatedTodo(id, title, completed, userId))
                 .when()
-                .put("/todos/" + id)
+                .put(TodoEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -75,7 +75,7 @@ public class TodoTests extends BaseTest {
     public void testDeleteTodo(int id) {
         given()
                 .when()
-                .delete("/todos/" + id)
+                .delete(TodoEndpoint.getById(id))
                 .then()
                 .statusCode(200);
     }

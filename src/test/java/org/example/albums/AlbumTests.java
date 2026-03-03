@@ -24,7 +24,7 @@ public class AlbumTests extends BaseTest {
     public void testGetAlbum(int id) {
         given()
                 .when()
-                .get("/albums/" + id)
+                .get(AlbumEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -39,9 +39,9 @@ public class AlbumTests extends BaseTest {
     @MethodSource("org.example.albums.AlbumData#getNewAlbums")
     public void testCreateAlbum(String title, int userId) {
         given()
-                .body(AlbumData.buildNewAlbum(title, userId))
+                .body(AlbumPayload.buildNewAlbum(title, userId))
                 .when()
-                .post("/albums")
+                .post(AlbumEndpoint.ALBUMS)
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue())
@@ -55,9 +55,9 @@ public class AlbumTests extends BaseTest {
     @MethodSource("org.example.albums.AlbumData#getUpdatedAlbums")
     public void testUpdateAlbum(int id, String title, int userId) {
         given()
-                .body(AlbumData.buildUpdatedAlbum(id, title, userId))
+                .body(AlbumPayload.buildUpdatedAlbum(id, title, userId))
                 .when()
-                .put("/albums/" + id)
+                .put(AlbumEndpoint.getById(id))
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(id))
@@ -72,7 +72,7 @@ public class AlbumTests extends BaseTest {
     public void testDeleteAlbum(int id) {
         given()
                 .when()
-                .delete("/albums/" + id)
+                .delete(AlbumEndpoint.getById(id))
                 .then()
                 .statusCode(200);
     }
