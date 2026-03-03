@@ -2,9 +2,9 @@ name: API Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   test:
@@ -33,3 +33,19 @@ jobs:
         name: allure-report
         path: target/site/allure-maven-plugin/
         retention-days: 7
+
+
+  notify-slack:
+    needs: test
+    if: always()
+    uses: ./.github/workflows/slack-notification.yml
+    secrets: inherit
+    with:
+      status: ${{ needs.build-and-test.result }}
+      tests_total: ${{ needs.build-and-test.outputs.tests_total }}
+      tests_passed: ${{ needs.build-and-test.outputs.tests_passed }}
+      tests_failed: ${{ needs.build-and-test.outputs.tests_failed }}
+      tests_skipped: ${{ needs.build-and-test.outputs.tests_skipped }}
+      passed_tests: ${{ needs.build-and-test.outputs.passed_tests }}
+      failed_tests: ${{ needs.build-and-test.outputs.failed_tests }}
+

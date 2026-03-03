@@ -18,12 +18,14 @@ public abstract class BaseTest {
         RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
 
         // Global Request Configuration
+//        This configures what every outgoing request looks like by default
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .log(LogDetail.URI)
                 .build();
 
         // Global Response Configuration
+//        This configures what happens when every response comes back
         RestAssured.responseSpecification = new ResponseSpecBuilder()
                 .log(LogDetail.STATUS)
                 .build();
